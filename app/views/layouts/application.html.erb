@@ -9,6 +9,26 @@
   </head>
 
   <body>
-    <%= yield %>
+    <!--Navigation Bar-->
+    <nav class="navbar navbar-light bg-light d-flex">
+      <div class="container">
+        <div class="logo">
+          <a class="navbar-brand" href="<%= posts_path%>">
+            <%= image_tag'camera.png', style: "width:15%" %>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!--Main content-->
+    <main class="container" style="min-height: 500px;">
+      <%= yield %>
+    </main>
+
+    <!--Footer-->
+    <footer class="container footer">
+     
+    </footer>
   </body>
 </html>
