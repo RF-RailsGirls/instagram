@@ -17,7 +17,7 @@ class PostsController < ApplicationController
       File.open(Rails.root.join('app','assets','images', file.original_filename), 'wb') do |f|
         f.write(file.read)
       end
-      params[:post][:image] = file.original_filename
+      @post.image = file.original_filename
     end
     if @post.save
       redirect_to posts_path
