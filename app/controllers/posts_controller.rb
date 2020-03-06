@@ -11,7 +11,15 @@ class PostsController < ApplicationController
   end
 
   def create
-    if @post = Post.create(post_params)
+    @post = Post.new(post_params)
+    if params[:post].present?
+      file = params[:post][:image]
+      File.open(Rails.root.join('app','assets','images', file.original_filename), 'wb') do |f|
+        f.write(file.read)
+      end
+      params[:post][:image] = file.original_filename
+    end
+    if @post.save
       redirect_to posts_path
     else
       render :new
@@ -19,9 +27,18 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @post = Post.find(params[:id])
   end
 
   def update
+    @post = Post.find(params[:id])
+    if params[:post].present? && params[:post][:image].present?
+      file = params[:post][:image]
+      File.open(Rails.root.join('app','assets','images', file.original_filename), 'wb') do |f|
+        f.write(file.read)
+      end
+      params[:post][:image] = file.original_filename
+    end
     if @post.update(post_params)
       redirect_to posts_path
     else
@@ -30,6 +47,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    @post = Post.find(params[:id])
     @post.destroy
     redirect_to root_path
   end
@@ -37,7 +55,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:image, :caption)
+    params.require(:post).permit(:caption,:image)
   end
 
   def set_post

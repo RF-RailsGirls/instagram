@@ -1,5 +1,6 @@
-<%= form_for @post do |f| %>
-	<%= f.file_field :image %>
-	<%= f.text_field :caption %>
-	<%= f.submit  "Submit" %>
+<%= form_for @post, html: {multipart: true } do |f| %>
+	<%= f.file_field :image %><br/><br/>
+	<%= f.text_field :caption %><br/><br/>
+	<%= f.submit  "Create Post" %>
 <%end%>
+
